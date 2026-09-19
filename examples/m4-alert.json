@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "alert": {
+    "id": "alert-m4-001",
+    "machine_id": "M4",
+    "machine_name": "Testing",
+    "occurred_at": "2026-09-18T10:00:00Z",
+    "severity": "warning"
+  },
+  "data_acquisition": {
+    "status": "available",
+    "machine_id": "M4",
+    "reported_at": "2026-09-18T10:00:00Z",
+    "observations": [
+      {
+        "id": "vibration",
+        "signal": "Vibration",
+        "trend": "increased"
+      },
+      {
+        "id": "rpm",
+        "signal": "RPM",
+        "trend": "abnormal"
+      }
+    ]
+  },
+  "ann_fault_detection": {
+    "status": "available",
+    "machine_id": "M4",
+    "reported_at": "2026-09-18T10:00:00Z",
+    "anomalies": [
+      {
+        "id": "ann-anomaly",
+        "label": "Abnormal vibration and RPM"
+      }
+    ],
+    "suspected_causes": [
+      {
+        "id": "cause-bearing",
+        "label": "Mechanical/bearing fault",
+        "supporting_observation_ids": [
+          "vibration",
+          "rpm"
+        ]
+      }
+    ]
+  },
+  "digital_twin": {
+    "status": "available",
+    "machine_id": "M4",
+    "reported_at": "2026-09-18T10:00:00Z",
+    "impacts": [
+      {
+        "id": "capacity",
+        "description": "M4 capacity decreased."
+      },
+      {
+        "id": "queue",
+        "description": "The queue before M4 is increasing."
+      }
+    ]
+  },
+  "decision_recovery": {
+    "status": "available",
+    "machine_id": "M4",
+    "reported_at": "2026-09-18T10:00:00Z",
+    "human": {
+      "id": "human",
+      "correction_possible": "yes",
+      "quick_correction": "unknown",
+      "approved_actions": []
+    },
+    "delay_consequences": [
+      {
+        "id": "delay",
+        "description": "If correction takes too long, the rule-based scheduler evaluates compatible available machines."
+      }
+    ],
+    "alternatives": [
+      {
+        "id": "alternative-m5",
+        "machine_id": "M5",
+        "machine_name": "Alternative machine",
+        "compatibility": "unknown",
+        "available": null,
+        "allocation_status": "not_planned"
+      }
+    ],
+    "scenarios": [
+      {
+        "id": "continue-m4",
+        "name": "Continue with M4",
+        "throughput": 65,
+        "throughput_unit": "units/hr"
+      },
+      {
+        "id": "reallocate",
+        "name": "Reallocate workload",
+        "throughput": 88,
+        "throughput_unit": "units/hr"
+      }
+    ],
+    "baseline_scenario_id": "continue-m4",
+    "recovery_scenario_id": "reallocate"
+  }
+}

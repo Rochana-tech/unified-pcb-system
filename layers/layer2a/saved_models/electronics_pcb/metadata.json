@@ -1,0 +1,108 @@
+{
+  "industry": "electronics_pcb",
+  "trained_at_utc": "2026-09-18T20:42:41.041516+00:00",
+  "features": [
+    "current",
+    "temperature",
+    "vibration",
+    "rpm"
+  ],
+  "fault_classes": [
+    "NORMAL",
+    "MOTOR_OVERLOAD",
+    "MOTOR_OVERHEAT",
+    "BEARING_FAULT"
+  ],
+  "class_index_mapping": {
+    "0": "NORMAL",
+    "1": "MOTOR_OVERLOAD",
+    "2": "MOTOR_OVERHEAT",
+    "3": "BEARING_FAULT"
+  },
+  "n_train": 2800,
+  "n_val": 600,
+  "n_test": 600,
+  "validation_metrics": {
+    "accuracy": 0.98,
+    "precision_macro": 0.9805,
+    "recall_macro": 0.98,
+    "confusion_matrix": [
+      [
+        150,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        147,
+        3,
+        0
+      ],
+      [
+        0,
+        1,
+        149,
+        0
+      ],
+      [
+        6,
+        2,
+        0,
+        142
+      ]
+    ],
+    "class_labels": [
+      "NORMAL",
+      "MOTOR_OVERLOAD",
+      "MOTOR_OVERHEAT",
+      "BEARING_FAULT"
+    ]
+  },
+  "test_metrics": {
+    "accuracy": 0.985,
+    "precision_macro": 0.9857,
+    "recall_macro": 0.985,
+    "confusion_matrix": [
+      [
+        150,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        149,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        150,
+        0
+      ],
+      [
+        7,
+        1,
+        0,
+        142
+      ]
+    ],
+    "class_labels": [
+      "NORMAL",
+      "MOTOR_OVERLOAD",
+      "MOTOR_OVERHEAT",
+      "BEARING_FAULT"
+    ]
+  },
+  "architecture": {
+    "type": "MLPClassifier (feed-forward ANN, backprop-trained)",
+    "hidden_layer_sizes": [
+      16,
+      8
+    ],
+    "activation": "relu",
+    "solver": "adam"
+  }
+}

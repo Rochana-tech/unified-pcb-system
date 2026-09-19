@@ -1,0 +1,64 @@
+const {chromium}=require('C:/Users/dhars/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const assert=require('node:assert/strict');
+(async()=>{
+ const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true,args:['--enable-unsafe-swiftshader']});
+ const page=await browser.newPage({viewport:{width:1600,height:1050}});
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
+ // Read real contract once, then use isolated browser fixtures; do not reset or inject faults into the user's session.
+ const response=await page.request.get('http://127.0.0.1:8002/api/dashboard');const fixture=await response.json();
+ fixture.decisions=[];fixture.routes={M1:'M1',M2:'M2',M3:'M3',M4:'M4',M5:'M5'};fixture.connection.error=null;
+ for(const m of fixture.machines){m.stale=false;m.machine_status=m.machine_id==='M4-BACKUP'?'IDLE':'RUNNING';m.fault_status='OK';m.queue_length=3;m.prediction.fault_type='NORMAL';m.prediction.fault_status='NORMAL';}
+ await page.route('**/api/dashboard',r=>r.fulfill({json:fixture}));
+ await page.addInitScript(()=>{window.WebSocket=class{close(){};};});
+ await page.goto('http://127.0.0.1:8002',{waitUntil:'networkidle'});
+ await page.waitForFunction(()=>typeof factory3D!=='undefined'&&factory3D?.debug()?.models.length===6);
+ // Fixture heartbeat keeps data fresh without altering controller counters.
+ await page.evaluate(()=>window.testHeartbeat=setInterval(()=>{lastReceived=Date.now();},500));
+ let d=await page.evaluate(()=>factory3D.debug());assert.equal(d.renderer,'three-webgl');assert.equal(d.models.length,6);
+ const t0=d.models[0].time;
+ await page.waitForTimeout(800);d=await page.evaluate(()=>factory3D.debug());assert.ok(d.models[0].time>t0);
+ await page.evaluate(()=>{const next=structuredClone(state);next.machines[0].machine_status='DOWN';next.machines[0].fault_status='FAULT';receive(next);});
+ const frozen=await page.evaluate(()=>factory3D.debug().models[0].time);
+ await page.waitForTimeout(650);assert.equal(await page.evaluate(()=>factory3D.debug().models[0].time),frozen);
+ await page.evaluate(()=>{const next=structuredClone(state);next.machines[1].machine_status='BLOCKED';next.machines[1].queue_length=8;receive(next);});
+ assert.equal(await page.evaluate(()=>factory3D.debug().models[1].queueVisible),8);
+ const blocked=await page.evaluate(()=>factory3D.debug().models[1].time);
+ await page.waitForTimeout(400);assert.equal(await page.evaluate(()=>factory3D.debug().models[1].time),blocked);
+ await page.evaluate(()=>{const next=structuredClone(state);next.routes.M4='M4-BACKUP';next.machines.find(m=>m.machine_id==='M4-BACKUP').machine_status='RUNNING';receive(next);});
+ assert.equal(await page.evaluate(()=>factory3D.debug().routeVisible),true);
+ await page.evaluate(()=>{const next=structuredClone(state);next.machines[2].telemetry.units_processed_total++;receive(next);});
+ assert.ok(await page.evaluate(()=>factory3D.debug().transfers)>0);
+ await page.locator('.machine-tag[data-machine="M1"]').click();
+ assert.equal(await page.evaluate(()=>factory3D.debug().selected),'M1');
+ await page.getByRole('button',{name:'Focus selected',exact:true}).click();
+ await page.waitForTimeout(200);
+ await page.screenshot({path:'data/placement-closeup.png',fullPage:true});
+ const camera=await page.evaluate(()=>factory3D.debug().camera);
+ await page.getByRole('button',{name:'Reset view',exact:true}).click();
+ assert.notDeepEqual(await page.evaluate(()=>factory3D.debug().camera),camera);
+ const canvas=page.locator('#factoryScene canvas');const rect=await canvas.boundingBox();
+ const before=await page.evaluate(()=>factory3D.debug().camera);
+ await page.mouse.move(rect.x+rect.width/2,rect.y+rect.height*.8);await page.mouse.down();
+ await page.mouse.move(rect.x+rect.width/2+90,rect.y+rect.height*.8-30,{steps:10});await page.mouse.up();
+ assert.notDeepEqual(await page.evaluate(()=>factory3D.debug().camera),before);
+ await page.getByRole('button',{name:'Reset view',exact:true}).click();
+ await page.evaluate(()=>{clearInterval(window.testHeartbeat);lastReceived=Date.now()-7000;connection();});
+ await page.waitForTimeout(120);const stopped=await page.evaluate(()=>factory3D.debug().models[2].time);
+ await page.waitForTimeout(400);assert.equal(await page.evaluate(()=>factory3D.debug().models[2].time),stopped);
+ assert.equal(await page.locator('#factoryScene').getAttribute('data-fresh'),'false');
+ await page.evaluate(()=>{lastReceived=Date.now();window.testHeartbeat=setInterval(()=>{lastReceived=Date.now()},500);});
+ await page.getByRole('button',{name:'Machine details',exact:true}).click();
+ assert.equal(await page.evaluate(()=>factory3D.debug()),null);
+ await page.getByRole('button',{name:'Line overview',exact:true}).click();
+ await page.waitForFunction(()=>factory3D.debug()?.models.length===6);
+ assert.equal(await page.locator('#factoryScene canvas').count(),1);
+ await page.screenshot({path:'data/true3d-desktop.png',fullPage:true});
+ await page.setViewportSize({width:390,height:844});
+ await page.getByRole('button',{name:'Reset view',exact:true}).click();
+ await page.waitForTimeout(400);await page.screenshot({path:'data/true3d-mobile.png',fullPage:true});
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ assert.deepEqual(errors,[]);
+ console.log('PASS: real WebGL models, running motion, fault/blockage freeze, exact queue count, standby routing, counter-driven transfers, selection, close-up, orbit, stale-data pause, disposal/remount, mobile layout; no browser errors.');
+ await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});
+

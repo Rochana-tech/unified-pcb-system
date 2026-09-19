@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MachineProductionRecord",
+  "description": "Stream B - one machine/production state record from MachineDataProvider",
+  "type": "object",
+  "required": [
+    "machine_id", "timestamp", "status", "processing_time", "capacity",
+    "utilization", "queue_length", "throughput", "availability"
+  ],
+  "properties": {
+    "machine_id": { "type": "string", "enum": ["M1", "M2", "M3", "M4", "M5"] },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "status": { "type": "string", "enum": ["RUNNING", "IDLE", "BLOCKED", "DOWN"] },
+    "processing_time": { "type": "number", "minimum": 0, "description": "Seconds per unit" },
+    "capacity": { "type": "number", "minimum": 0, "description": "Rated units/hour" },
+    "utilization": { "type": "number", "minimum": 0, "maximum": 1 },
+    "queue_length": { "type": "integer", "minimum": 0 },
+    "throughput": { "type": "number", "minimum": 0, "description": "Units/minute" },
+    "availability": { "type": "number", "minimum": 0, "maximum": 1 }
+  },
+  "example": {
+    "machine_id": "M2",
+    "timestamp": "2026-09-19T10:15:33.654321+00:00",
+    "status": "RUNNING",
+    "processing_time": 14.32,
+    "capacity": 100,
+    "utilization": 0.81,
+    "queue_length": 3,
+    "throughput": 1.35,
+    "availability": 0.97
+  }
+}

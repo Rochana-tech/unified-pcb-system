@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layer 2A — ANN Fault Detection</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">INDUSTRIAL DIGITAL TWIN</p>
+        <h1>Layer 2A — ANN Fault Detection</h1>
+        <p class="subtitle">Simple view of the trained fault-detection model and its sensor dataset.</p>
+      </div>
+      <div class="status"><span class="dot"></span> MODEL READY</div>
+    </header>
+
+    <section class="cards">
+      <article class="card metric"><span>Industry</span><strong>Electronics / PCB Assembly</strong></article>
+      <article class="card metric"><span>Test Accuracy</span><strong>98.5%</strong></article>
+      <article class="card metric"><span>Fault Classes</span><strong>4</strong></article>
+      <article class="card metric"><span>ANN</span><strong>16 → 8</strong></article>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Sensor Features</h2>
+            <p>These are the four inputs used by the ANN.</p>
+          </div>
+        </div>
+        <div class="feature-grid">
+          <div class="feature"><b>Current</b><span>A</span></div>
+          <div class="feature"><b>Temperature</b><span>°C</span></div>
+          <div class="feature"><b>Vibration</b><span>sensor value</span></div>
+          <div class="feature"><b>RPM</b><span>rev/min</span></div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Detected Fault Classes</h2>
+            <p>Output labels supported by the trained model.</p>
+          </div>
+        </div>
+        <div class="fault-list">
+          <div><span class="pill normal">NORMAL</span><small>No fault detected</small></div>
+          <div><span class="pill overload">MOTOR OVERLOAD</span><small>Load-related fault</small></div>
+          <div><span class="pill overheat">MOTOR OVERHEAT</span><small>High-temperature fault</small></div>
+          <div><span class="pill bearing">BEARING FAULT</span><small>Mechanical/vibration fault</small></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>Model Information</h2>
+          <p>Training information from the existing saved model.</p>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div><span>Architecture</span><b>MLPClassifier · ReLU · Adam</b></div>
+        <div><span>Training samples</span><b>2,800</b></div>
+        <div><span>Validation samples</span><b>600</b></div>
+        <div><span>Test samples</span><b>600</b></div>
+        <div><span>Validation accuracy</span><b>98.0%</b></div>
+        <div><span>Test accuracy</span><b>98.5%</b></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head actions">
+        <div>
+          <h2>Dataset</h2>
+          <p>Bundled synthetic training dataset used by the existing Layer 2A project.</p>
+        </div>
+        <a class="button" href="electronics_pcb_synthetic.csv" download>Download CSV</a>
+      </div>
+      <div class="dataset-meta">
+        <span id="rowCount">Loading rows…</span>
+        <span>Columns: current · temperature · vibration · rpm · fault_type</span>
+      </div>
+      <div class="table-wrap">
+        <table id="datasetTable">
+          <thead>
+            <tr>
+              <th>Current</th><th>Temperature</th><th>Vibration</th><th>RPM</th><th>Fault Type</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      Layer 2A scope: identify <b>what fault is occurring</b>. Health scoring, Digital Twin, triage and recovery are handled by later layers.
+    </footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

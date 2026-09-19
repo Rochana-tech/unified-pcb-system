@@ -1,0 +1,41 @@
+industry: automobile
+display_name: "Automobile (Placeholder)"
+# No trained model exists yet for this industry. The registry must refuse
+# to serve predictions for this config rather than silently falling back
+# to another industry's model.
+status: not_trained
+
+# Same schema as electronics_pcb so this can be trained later without
+# changing any code — only these values and the artifacts below.
+features:
+  - current
+  - temperature
+  - vibration
+  - rpm
+
+fault_classes:
+  - NORMAL
+  - MOTOR_OVERLOAD
+  - MOTOR_OVERHEAT
+  - BEARING_FAULT
+
+severity_rules:
+  NORMAL:
+    default: NONE
+  MOTOR_OVERLOAD:
+    default: HIGH
+    low_confidence_below: 0.6
+    low_confidence_severity: MEDIUM
+  MOTOR_OVERHEAT:
+    default: HIGH
+    low_confidence_below: 0.6
+    low_confidence_severity: MEDIUM
+  BEARING_FAULT:
+    default: MEDIUM
+    low_confidence_below: 0.6
+    low_confidence_severity: LOW
+
+artifacts:
+  model_path: saved_models/automobile/model.joblib
+  scaler_path: saved_models/automobile/scaler.joblib
+  metadata_path: saved_models/automobile/metadata.json

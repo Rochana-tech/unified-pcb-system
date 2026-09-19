@@ -1,0 +1,40 @@
+industry: electronics_pcb
+display_name: "Electronics / PCB Assembly"
+status: trained
+
+# Order matters: this is the exact feature vector order the model expects.
+features:
+  - current
+  - temperature
+  - vibration
+  - rpm
+
+# Class index order matters: must match the label encoding used at training time.
+fault_classes:
+  - NORMAL
+  - MOTOR_OVERLOAD
+  - MOTOR_OVERHEAT
+  - BEARING_FAULT
+
+# Simple, transparent (non-ML) severity rule, layered on top of the ANN's
+# fault_type + confidence output. NOT part of the ANN's job.
+severity_rules:
+  NORMAL:
+    default: NONE
+  MOTOR_OVERLOAD:
+    default: HIGH
+    low_confidence_below: 0.6
+    low_confidence_severity: MEDIUM
+  MOTOR_OVERHEAT:
+    default: HIGH
+    low_confidence_below: 0.6
+    low_confidence_severity: MEDIUM
+  BEARING_FAULT:
+    default: MEDIUM
+    low_confidence_below: 0.6
+    low_confidence_severity: LOW
+
+artifacts:
+  model_path: saved_models/electronics_pcb/model.joblib
+  scaler_path: saved_models/electronics_pcb/scaler.joblib
+  metadata_path: saved_models/electronics_pcb/metadata.json

@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SensorRecord",
+  "description": "Stream A - one MQTT sensor reading published on factory/<machine_id>/sensors",
+  "type": "object",
+  "required": ["machine_id", "timestamp", "current", "temperature", "vibration", "rpm"],
+  "properties": {
+    "machine_id": { "type": "string", "enum": ["M1", "M2", "M3", "M4", "M5"] },
+    "timestamp": { "type": "string", "format": "date-time", "description": "ISO-8601 UTC, set at generation time" },
+    "current": { "type": "number", "minimum": 0, "description": "Amps" },
+    "temperature": { "type": "number", "minimum": 0, "description": "Degrees Celsius" },
+    "vibration": { "type": "number", "minimum": 0, "description": "Relative vibration amplitude" },
+    "rpm": { "type": "number", "minimum": 0, "description": "Revolutions per minute" },
+    "health_state": {
+      "type": "string",
+      "enum": ["NORMAL", "DEGRADED", "FAULT"],
+      "description": "Ground-truth simulator label; optional input for the ANN fault-detection layer"
+    },
+    "_received_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Added by the MQTT consumer on receipt, not by the publisher"
+    }
+  },
+  "example": {
+    "machine_id": "M4",
+    "timestamp": "2026-09-19T10:15:32.123456+00:00",
+    "current": 6.1,
+    "temperature": 52.3,
+    "vibration": 0.94,
+    "rpm": 612.4,
+    "health_state": "FAULT"
+  }
+}

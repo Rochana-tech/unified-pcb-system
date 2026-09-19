@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>PCB Assembly · Unified Digital Twin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#0c1116; --panel:#121922; --panel2:#161f2a; --line:#232e3b;
+  --text:#dbe4ee; --muted:#7d8ea3; --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --ok:#3fb950; --warn:#e3b341; --err:#f85149; --accent:#58a6ff;
+}
+:root:not([data-theme="light"]){ }
+:root[data-theme="light"]{
+  --bg:#f4f6f8; --panel:#ffffff; --panel2:#eef1f4; --line:#dde3ea;
+  --text:#1b2531; --muted:#5c6b7f;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f4f6f8; --panel:#ffffff; --panel2:#eef1f4; --line:#dde3ea;
+    --text:#1b2531; --muted:#5c6b7f;
+  }
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;
+  border-bottom:1px solid var(--line);background:var(--panel);gap:16px;flex-wrap:wrap;}
+header h1{font-size:15px;margin:0;font-weight:600;letter-spacing:.2px;}
+header h1 span{color:var(--muted);font-weight:400;}
+.head-right{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12.5px;color:var(--muted);}
+.sys-badge{display:flex;align-items:center;gap:6px;color:var(--text);}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none;}
+.dot.ok{background:var(--ok);box-shadow:0 0 0 3px rgba(63,185,80,.15);}
+.dot.warn{background:var(--warn);box-shadow:0 0 0 3px rgba(227,179,65,.15);}
+.dot.err{background:var(--err);box-shadow:0 0 0 3px rgba(248,81,73,.15);}
+button{font:inherit;cursor:pointer;}
+.btn{background:var(--panel2);border:1px solid var(--line);color:var(--text);
+  padding:6px 12px;border-radius:6px;font-size:12.5px;font-family:var(--mono);}
+.btn:hover{border-color:var(--accent);}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#04121f;font-weight:600;}
+.btn.danger{border-color:var(--err);color:var(--err);}
+.shell{display:flex;min-height:calc(100vh - 52px);}
+nav{width:190px;flex:none;border-right:1px solid var(--line);background:var(--panel);padding:14px 0;}
+nav button{display:block;width:100%;text-align:left;background:none;border:none;color:var(--muted);
+  padding:9px 20px;font-size:13px;border-left:2px solid transparent;}
+nav button.active{color:var(--text);border-left-color:var(--accent);background:var(--panel2);}
+nav button:hover{color:var(--text);}
+main{flex:1;padding:22px;overflow-x:auto;}
+.view{display:none;}
+.view.active{display:block;}
+.view h2{font-size:15px;margin:0 0 14px;font-weight:600;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;}
+.card .ctitle{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+.card .clabel{font-size:14px;font-weight:600;margin-bottom:10px;}
+.card .row{display:flex;justify-content:space-between;font-size:12.5px;font-family:var(--mono);
+  color:var(--muted);padding:3px 0;}
+.card .row b{color:var(--text);font-weight:500;}
+.card .stat{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;margin-bottom:10px;}
+.card.err{border-color:var(--err);}
+.card .actions{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);
+  border-radius:8px;overflow:hidden;font-size:13px;}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);}
+th{color:var(--muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.05em;}
+tr:last-child td{border-bottom:none;}
+.pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:12px;}
+.section{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:14px;}
+.section h3{margin:0 0 10px;font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
+select,input{background:var(--panel2);border:1px solid var(--line);color:var(--text);
+  padding:6px 10px;border-radius:6px;font-family:var(--mono);font-size:13px;}
+.log-line{font-family:var(--mono);font-size:12.5px;padding:4px 0;border-bottom:1px solid var(--line);
+  display:flex;gap:10px;}
+.log-line .lvl{width:60px;flex:none;}
+.lvl.INFO{color:var(--accent);} .lvl.WARNING{color:var(--warn);} .lvl.ERROR{color:var(--err);}
+.filters{display:flex;gap:6px;margin-bottom:10px;}
+.filters button.active{border-color:var(--accent);color:var(--accent);}
+.toast{position:fixed;bottom:18px;right:18px;background:var(--panel);border:1px solid var(--line);
+  border-left:3px solid var(--ok);padding:10px 16px;border-radius:6px;font-size:13px;display:none;
+  box-shadow:0 4px 16px rgba(0,0,0,.3);}
+.dialog-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;
+  justify-content:center;z-index:10;}
+.dialog{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;width:320px;}
+.dialog h4{margin:0 0 8px;font-size:14px;}
+.dialog p{margin:0 0 16px;font-size:13px;color:var(--muted);}
+.dialog .drow{display:flex;justify-content:flex-end;gap:8px;}
+.muted{color:var(--muted);font-size:12.5px;}
+</style>
+<link rel="stylesheet" href="/static/integration.css">
+<link rel="stylesheet" href="/static/factory.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+
+<header>
+  <h1>Industrial Digital Twin <span>Electronics Manufacturing · PCB assembly line</span></h1>
+  <div class="head-right">
+    <span class="industry-chip"> <b id="industryLabel" style="color:var(--text)">Electronics/PCB</b></span>
+    <span class="sys-badge"><span class="dot warn" id="sysDot"></span><span id="sysLabel">CONNECTING</span></span>
+    <button class="btn" onclick="refreshAll()">Refresh</button>
+    <button class="btn" id="operatorAccess" onclick="showOperatorLogin()" hidden>Operator access</button>
+  </div>
+</header>
+
+<div class="shell">
+  <nav id="nav"></nav>
+  <main id="main"><div id="connectionBanner" hidden></div><div id="content">Connecting to backend…</div></main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="/static/factory.js"></script>
+<script src="/static/access.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

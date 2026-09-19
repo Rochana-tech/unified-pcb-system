@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Layer 1 - Data Acquisition</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">INDUSTRIAL DIGITAL TWIN</p>
+        <h1>Layer 1 — Data Acquisition</h1>
+        <p class="subtitle">Simple monitoring view for sensor and machine/production data</p>
+      </div>
+      <div class="badge"><span class="dot"></span> DEMO UI</div>
+    </header>
+
+    <section class="status-grid">
+      <div class="status-card"><span class="dot green"></span><div><small>API</small><strong>RUNNING</strong></div></div>
+      <div class="status-card"><span class="dot green"></span><div><small>MQTT SENSOR STREAM</small><strong>CONNECTED</strong></div></div>
+      <div class="status-card"><span class="dot green"></span><div><small>MACHINE SOURCE</small><strong>ACTIVE</strong></div></div>
+      <div class="status-card"><span class="dot blue"></span><div><small>DATA MODE</small><strong>DEMO DATA</strong></div></div>
+    </section>
+
+    <section class="section-head">
+      <div><h2>Live Sensor Data</h2><p>Current health-related sensor readings</p></div>
+      <span class="updated" id="sensorTime">Updated just now</span>
+    </section>
+    <section class="table-card">
+      <div class="table-wrap"><table>
+        <thead><tr><th>Machine</th><th>Current</th><th>Temperature</th><th>Vibration</th><th>RPM</th><th>State</th></tr></thead>
+        <tbody id="sensorTable"></tbody>
+      </table></div>
+    </section>
+
+    <section class="section-head">
+      <div><h2>Machine / Production Data</h2><p>Controller and production information</p></div>
+      <span class="updated" id="productionTime">Updated just now</span>
+    </section>
+    <section class="table-card">
+      <div class="table-wrap"><table>
+        <thead><tr><th>Machine</th><th>Status</th><th>Cycle Time</th><th>Output / hr</th><th>Good</th><th>Reject</th><th>Downtime</th></tr></thead>
+        <tbody id="productionTable"></tbody>
+      </table></div>
+    </section>
+
+    <section class="bottom-grid">
+      <div class="info-card">
+        <h2>Data Sources</h2>
+        <div class="source"><span class="source-icon">A</span><div><strong>Sensor Stream</strong><p>Sensor values intended for downstream ANN fault detection.</p></div></div>
+        <div class="source"><span class="source-icon">B</span><div><strong>Machine / Production Stream</strong><p>Controller-style production counters, cycle timing and machine state.</p></div></div>
+      </div>
+      <div class="info-card">
+        <h2>Dataset</h2>
+        <p class="dataset-name">controller_sample.csv</p>
+        <p>Sample controller dataset included with this project for demonstration and testing.</p>
+        <a class="button" href="../datasets/controller_sample.csv" download>Download Dataset</a>
+      </div>
+    </section>
+
+    <footer>Layer 1 only • No ANN, ML, Digital Twin, Triage or What-if logic in this UI</footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+[
+  {
+    "archive": "layer1_data_acquisition_with_simple_ui.zip",
+    "sha256": "e279176d0023349098561cbe37e3b9758cf4cc9e6f9a88b4624ac3a3de98bdd0",
+    "destination": "layers\\layer1",
+    "source_path": "C:\\Users\\dhars\\OneDrive\\Desktop\\HACK\\layer1_data_acquisition_with_simple_ui.zip"
+  },
+  {
+    "archive": "layer2a_fault_detection_with_simple_ui.zip",
+    "sha256": "1f3e5b766bc913da00154459cb40db0b1622f8360153cbd399105b79df835a9e",
+    "destination": "layers\\layer2a",
+    "source_path": "C:\\Users\\dhars\\OneDrive\\Desktop\\HACK\\layer2a_fault_detection_with_simple_ui.zip"
+  },
+  {
+    "archive": "layer3.zip",
+    "sha256": "bae0f48ac92804c9c9bb7651d2ff9ded31cb7d202a2d1dc18d5a424130d473ec",
+    "destination": "layers\\layer3",
+    "source_path": "C:\\Users\\dhars\\OneDrive\\Desktop\\HACK\\layer3.zip"
+  },
+  {
+    "archive": "layer4_recovery_with_simple_ui.zip",
+    "sha256": "c4c72a2be4126635db2d769d50e43a569b2cef07ebce387b144f3b326b8b17eb",
+    "destination": "layers\\layer4",
+    "source_path": "C:\\Users\\dhars\\OneDrive\\Desktop\\HACK\\layer4_recovery_with_simple_ui.zip"
+  },
+  {
+    "source_file": "controller_live_generator.py",
+    "source_path": "C:\\Users\\dhars\\OneDrive\\Desktop\\HACK\\controller_live_generator.py",
+    "sha256": "3c93df2b49fb79d8fae89a6efa6c5598bc72ffb78ebd83ebac6917a91f5b252e",
+    "destination": "controller/controller_live_generator.py"
+  },
+  {
+    "source_file": "feature_engineering.py",
+    "source_path": "C:\\Users\\dhars\\OneDrive\\Desktop\\HACK\\feature_engineering.py",
+    "sha256": "17551042d5a0d4304c8f85786c1125fa568c8e6a62d9fbbff5411b565563b099",
+    "destination": "controller/feature_engineering.py"
+  },
+  {
+    "source_file": "train_models.py",
+    "source_path": "C:\\Users\\dhars\\OneDrive\\Desktop\\HACK\\train_models.py",
+    "sha256": "1fb88b16999b2871b6fbc7a978d5932af28cd2bcd0be24eda8c6bf07440f5602",
+    "destination": "controller/train_models.py"
+  },
+  {
+    "source_file": "predict_live.py",
+    "source_path": "C:\\Users\\dhars\\OneDrive\\Desktop\\HACK\\predict_live.py",
+    "sha256": "4ddf21c62e2bb11b37589f60045b39e088a95f5e476bc51f936464d67ae83f65",
+    "destination": "controller/predict_live.py"
+  },
+  {
+    "source_file": "developers_workspace.html",
+    "source_path": "C:\\Users\\dhars\\OneDrive\\Desktop\\HACK\\developers_workspace.html",
+    "sha256": "95480a68207aa7f16dff29d7bd3d810d3c1b361f80f34c12fc10affde8219231",
+    "destination": "frontend/index.html"
+  }
+]

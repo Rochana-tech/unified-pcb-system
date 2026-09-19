@@ -1,0 +1,21 @@
+# Put this file at the ROOT of the GitHub repository alongside main.py.
+services:
+  - type: web
+    name: pcb-assembly-digital-twin
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: PUBLIC_DEPLOYMENT
+        value: "1"
+      - key: OPERATOR_KEY
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /app/data/manufacturing.sqlite3
+      - key: OMP_NUM_THREADS
+        value: "1"
+      - key: OPENBLAS_NUM_THREADS
+        value: "1"
+

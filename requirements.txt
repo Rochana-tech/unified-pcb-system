@@ -1,0 +1,3 @@
+# Exact environment tested with Python 3.12 on Windows.
+-r requirements.lock.txt
+

@@ -1,0 +1,9 @@
+.venv/
+data/
+.git/
+**/__pycache__/
+*.zip
+.env
+.env.*
+tests/
+SOURCE_MANIFEST.json

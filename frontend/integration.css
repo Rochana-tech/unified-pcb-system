@@ -1,0 +1,14 @@
+
+h2{font-size:22px!important;margin-bottom:8px!important} p{line-height:1.55}.title-row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.notice{padding:12px 15px;border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--panel);border-radius:6px;margin-bottom:18px;font-size:13px;line-height:1.5}
+.notice.error{border-color:var(--err);color:var(--err)}[hidden]{display:none!important}.metrics{margin-bottom:20px}.big{font-size:29px;font-weight:600;margin:8px 0}
+.stations{grid-template-columns:repeat(5,minmax(155px,1fr));margin-bottom:20px}.machine-card{text-align:left;color:var(--text);font-family:inherit}.machine-card:hover{border-color:var(--accent)}
+.card-link{margin-top:16px;color:var(--accent)}.actions{display:flex;gap:8px;flex-wrap:wrap}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.incident{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.form-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px}.form-grid label{font-size:13px;display:flex;flex-direction:column;gap:8px}input,select{max-width:100%}
+.question{border-bottom:1px solid var(--line)}.question-button{width:100%;display:flex;justify-content:space-between;gap:12px;padding:16px 0;background:none;border:0;color:var(--text);text-align:left;font-weight:600}
+.answer{padding:0 12px 12px;font-size:14px}.event{padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}.event pre{max-height:150px;overflow:auto;color:var(--muted);font-size:11px;white-space:pre-wrap;overflow-wrap:anywhere}
+a{color:var(--accent)}.spaced{margin-top:18px}svg{width:100%;max-height:155px}details{margin-top:15px;font-size:13px}li{margin-bottom:7px}
+@media(max-width:1100px){.stations{grid-template-columns:repeat(3,minmax(155px,1fr))}}
+@media(max-width:720px){.shell{display:block}nav{width:100%;display:flex;overflow-x:auto;padding:6px;border-right:0;border-bottom:1px solid var(--line)}nav button{width:auto;white-space:nowrap;padding:12px}main{padding:14px}.stations{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.head-right{flex-wrap:wrap}}
+
