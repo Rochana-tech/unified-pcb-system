@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "unified-system/app.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "unified-system/app.py"
+    }
+  ]
+}
